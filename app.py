@@ -1,37 +1,31 @@
-#Import flask from library
 from flask import Flask
 from flask import render_template
 from markupsafe import escape
-#init the flask app server
-app = Flask(__name__,static_url_path='',static_folder='static')
-app.config.from_object(__name__)
 
-#When user access root URL: example.com/
+app = Flask(__name__, static_url_path='', static_folder='static')
+
 @app.route('/')
-def index():
-    title="Hung's cave"
-    name="Hello"
-    content="Welcome the app"
-    return render_template('index.html', title=title, name=name, content=content)
+def index(): 
+    title = "The Artist"
+    name = "Hello"
+    content = "Welcome to the Gallery"
+    return render_template('index.html', title=title)
 
-#add another route function name must be different
-@app.route('/whois/<name>')
-#take the data from <name>
-def showinfo(name):
-    #pass <name> data to name variable by escape(name)
-    if escape(name)=="hung":
-        return render_template('index.html', title="Whois Information", name="Duong Dang Hung", content="He is a SIMP, horny, toxic guy")
-    if escape(name)=="minh":
-        return render_template('index.html', title="Who is Minh", name="Nguyen Hoang Minh aka Mom Long 2", content="Donkey, idiot sandwich, sleep overnoon, always late")
+#add another
+@app.route('/artist/<name>')
+def showinfo(name): 
+    if escape(name)=="Hung":
+        return render_template('index.html', title="Simp man", name = "Hung", content= "Simp lord", intro= "One of the main Simp of UCC, a closet wjbu as he refuses to accept being a Simp lord, that is why he gets teased alot by the members of USTH Coder Club")
+    if escape(name)=="Phuong":
+        return render_template('index.html', title="Kimime Kimi", name = "Phuong", content= "The Artist")
     else:
-        return render_template('index.html',title="Not found",name="Not found",content="Sorry we don't know him")
+        return render_template('index.html', title="Unknown", content= "Into the Unkknown!")
 
-#still taking the variable height but double the value. define height as integer
-@app.route('/doublemyheight/<int:height>')
+@app.route('/whatismyheight/<int:height>')
 def show_height(height):
     doubleh = height * 2
-    return "Your doubled height is: " + str(doubleh)
+    return "Your doubleh height is: " + str(doubleh)
 
-#main function will exec first (run directly without flask run)
+#main_function
 if __name__ == "__main__":
     app.run(debug=True)
